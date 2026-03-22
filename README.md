@@ -70,6 +70,41 @@ echo "piped text" | shuttle copy
 
 Click the Shuttle icon in the Dock (or in /Applications) to open the URL Fixer window. Paste a broken URL, and it strips whitespace/newlines automatically. Then copy the clean URL or open it directly in your browser.
 
+## Claude Code Skill
+
+Shuttle includes a skill for [Claude Code](https://claude.com/claude-code) that lets the AI assistant send text directly to your clipboard.
+
+### Install the Skill
+
+Copy the skill file to your Claude Code skills directory:
+
+```bash
+mkdir -p ~/.claude/skills/shuttle
+cp claude-skill/SKILL.md ~/.claude/skills/shuttle/SKILL.md
+```
+
+### What It Does
+
+Once installed, Claude Code can invoke `shuttle copy` to pop up a window with code, commands, or URLs whenever you need to copy something. No more fighting with terminal text selection.
+
+### Optional: Telegram Integration
+
+The included `shuttle-send` script sends text to both the Shuttle Mac app AND a Telegram bot simultaneously. This is useful when you're SSH'd into your Mac from a phone -- you get the text in Telegram where you can easily copy it.
+
+To use it, edit `shuttle-send.sh` with your Telegram bot token and chat ID, then:
+
+```bash
+cp shuttle-send.sh ~/.local/bin/shuttle-send
+chmod +x ~/.local/bin/shuttle-send
+```
+
+Usage:
+```bash
+# Sends to both Shuttle popup and Telegram
+shuttle-send copy "text here"
+shuttle-send url "broken url"
+```
+
 ## How It Works
 
 - Native SwiftUI app compiled with `swiftc`
