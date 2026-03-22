@@ -1,28 +1,28 @@
 ---
 name: shuttle
-description: Use when sending code, URLs, or text to Brandan's clipboard via the Shuttle Mac app. Triggers when sharing code snippets, authentication URLs, or any text Brandan needs to copy.
+description: Use when sending code, URLs, or text to the user's clipboard via the Shuttle Mac app. Triggers when sharing code snippets, authentication URLs, or any text the user needs to copy.
 ---
 
 # Shuttle - Terminal to Mac Bridge
 
-Shuttle sends text to both the Mac Shuttle app (popup window) AND Telegram. Use it whenever Brandan needs to copy something. Always use `shuttle-send` (not `shuttle`) so it goes to both places.
+Shuttle pops up a window with text and a "Copy to Clipboard" button. Use it whenever the user needs to copy something from a terminal session.
 
 ## When to Use
 
-- Sharing code snippets that Brandan wants to copy
+- Sharing code snippets the user wants to copy
 - Providing authentication URLs (which often get broken by terminal line wrapping)
-- Any time you'd normally say "copy this" -- use Shuttle instead so Brandan can one-click copy
+- Any time you'd normally say "copy this" -- use Shuttle instead for one-click copy
 
 ## Commands
 
-### Copy text (sends to Shuttle app + Telegram)
+### Copy text
 ```bash
-shuttle-send copy "text to copy here"
+shuttle copy "text to copy here"
 ```
 
 ### Copy multi-line text (use heredoc)
 ```bash
-shuttle-send copy "$(cat <<'EOF'
+shuttle copy "$(cat <<'EOF'
 line 1
 line 2
 line 3
@@ -30,28 +30,27 @@ EOF
 )"
 ```
 
-### Fix a broken URL (cleans and sends to both)
+### Fix a broken URL
 ```bash
-shuttle-send url "https://example.com/broken/
+shuttle url "https://example.com/broken/
 url/from/terminal/wrapping"
 ```
 
 ### Pipe text
 ```bash
-echo "some output" | shuttle-send copy
+echo "some output" | shuttle copy
 ```
 
 ## Behavior
 
-- **Mac Shuttle app:** Floating window with text and "Copy to Clipboard" button. Window closes after copy.
-- **Telegram:** Text sent as a message to Brandan's Telegram bot. He can copy from there on his phone.
-- **URLs:** Shuttle app shows "Open in Browser" button. Telegram sends the cleaned URL.
-- Both happen simultaneously.
+- A floating window appears with the text displayed in a monospace font
+- "Copy to Clipboard" button copies the text and the window closes automatically
+- For URLs: also shows an "Open in Browser" button
+- The app quits after the user copies or closes the window (when invoked from CLI)
 
 ## Location
 
 - App: `/Applications/Shuttle.app`
-- CLI (app only): `~/.local/bin/shuttle`
-- CLI (both): `~/.local/bin/shuttle-send`
+- CLI: `~/.local/bin/shuttle`
 - Source: `~/Shuttle/`
 - Repo: https://github.com/brandankraft/Shuttle
